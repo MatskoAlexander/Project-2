@@ -1,4 +1,5 @@
 from turtle import *
+import math
 
 def rounds (x, y, r, n):
     if r > 0:
@@ -50,7 +51,7 @@ def strecoza(x, y, r, k):
 
 
 def triangle(x1, y1, x2, y2, x3, y3):
-    if (x1 + x2) / 2 > 2:
+    if ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** (1 / 2) > 4:
         up()
         goto(x1, y1)
         down()
@@ -61,7 +62,17 @@ def triangle(x1, y1, x2, y2, x3, y3):
         goto((x2 + x3) / 2, (y2 + y3) / 2)
         goto((x1 + x3) / 2, (y1 + y3) / 2)
         goto((x1 + x2) / 2, (y1 + y2) / 2)
-        triangle((x1 + x2) / 2, (y1 + y2) / 2, (x2 + x3) / 2, (y2 + y3) / 2, (x1 + x3) / 2, (y1 + y3) / 2)
+        triangle((x1 + (x1 + x2) / 2) / 2, (y1 +(y1 + y2) / 2) / 2, (x1 + (x1 + x3) / 2) / 2, (y1 + (y1 + y3) / 2) / 2,
+                 ((x1 + x2) / 2 + (x1 + x3) / 2) / 2, ((y1 + y2) / 2 + (y1 + y3) / 2) / 2)
+        triangle(((x1 + x2) / 2 + x2) / 2, (y2 + (y1 + y2) / 2) / 2, (x2 + (x2 + x3) / 2) / 2,
+                 (y2 + (y2 + y3) / 2) / 2, ((x1 + x2) / 2 + (x2 + x3) / 2) / 2, ((y1 + y2) / 2 + (y2 + y3) / 2) / 2)
+        triangle((x3 + (x1 + x3) / 2) / 2, (y3 + (y1 + y3) / 2) / 2, (x3 + (x2 + x3) / 2) / 2, (y3 + (y2 + y3) / 2) / 2,
+                 ((x3 + x2) / 2 + (x1 + x3) / 2) / 2, ((y3 + y2) / 2 + (y1 + y3) / 2) / 2)
+        triangle(((x3 + x2) / 2 + (x1 + x3) / 2) / 2, ((y3 + y2) / 2 + (y1 + y3) / 2) / 2,
+                ((x1 + x2) / 2 + (x2 + x3) / 2) / 2, ((y1 + y2) / 2 + (y2 + y3) / 2) / 2,
+                ((x1 + x2) / 2 + (x1 + x3) / 2) / 2, ((y1 + y2) / 2 + (y1 + y3) / 2) / 2)
+
+
 
 
 
@@ -94,4 +105,3 @@ elif answer == 4:
             'Введите x3', 0, minval=-500, maxval=500), numinput('Координаты 3 точки', 'Введите y3', 0, minval=-500, maxval=500))
 
 mainloop()
-done()
