@@ -1,5 +1,4 @@
 from turtle import *
-import math
 
 def rounds (x, y, r, n):
     if r > 0:
