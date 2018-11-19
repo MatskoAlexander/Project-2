@@ -1,6 +1,8 @@
 from turtle import *
+import local
 
-def rounds (x, y, r, n):
+
+def rounds(x, y, r, n):
     if r > 0:
         up()
         goto(x, y - r)
@@ -8,6 +10,7 @@ def rounds (x, y, r, n):
         circle(r)
         up()
         rounds(x, y, r - n, n)
+
 
 def rectangle(x1, y1, x2, y2):
     up()
@@ -18,89 +21,69 @@ def rectangle(x1, y1, x2, y2):
     goto(x1, y2)
     goto(x1, y1)
 
-def puzzle(x1, y1, a, k):
-    if a > k:
-        rectangle(x1 - a / 2, y1 - a / 2, x1 + a / 2, y1 + a / 2)
-        rectangle(x1 - a / 2 - a / 4, y1 - a / 2 - a / 4, x1 - a / 4, y1 - a / 4)
-        rectangle(x1 - a / 2 - a / 4, y1 + a / 2 + a / 4, x1 - a / 4, y1 + a / 4)
-        rectangle(x1 + a / 2 + a / 4, y1 + a / 2 + a / 4, x1 + a / 4, y1 + a / 4)
-        rectangle(x1 + a / 2 + a / 4, y1 - a / 2 - a / 4, x1 + a / 4, y1 - a / 4)
-        puzzle(x1 - a / 2, y1 - a / 2, a / 2, k)
-        puzzle(x1 - a / 2, y1 + a / 2, a / 2, k)
-        puzzle(x1 + a / 2, y1 + a / 2, a / 2, k)
-        puzzle(x1 + a / 2, y1 - a / 2, a / 2, k)
+
+def puzzle(x, y, a, k):
+    if a >= k:
+        rectangle(x - a / 2, y - a / 2, x + a / 2, y + a / 2)
+        puzzle(x - a / 2, y - a / 2, a / 2, k)
+        puzzle(x - a / 2, y + a / 2, a / 2, k)
+        puzzle(x + a / 2, y + a / 2, a / 2, k)
+        puzzle(x + a / 2, y - a / 2, a / 2, k)
 
 
 def strecoza(x, y, r, k):
-    if r > k:
+    if r >= k:
         up()
         goto(x, y - r)
         down()
         circle(r)
-        up()
-        goto(x + r / 2, y - r / 2)
-        down()
-        circle(r / 2)
-        up()
-        goto(x - r / 2, y - r / 2)
-        down()
-        circle(r / 2)
         strecoza(x - r / 2, y, r / 2, k)
         strecoza(x + r / 2, y, r / 2, k)
 
 
-def triangle(x1, y1, x2, y2, x3, y3):
-    if ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** (1 / 2) > 4:
+def triangle(x1, y1, x2, y2, x3, y3, k):
+    if ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** (1 / 2) >= k and ((x3 - x1) ** 2 + (y3 - y1) ** 2) ** (1 / 2) >= k and \
+            ((x3 - x2) ** 2 + (y3 - y2) ** 2) ** (1 / 2) >= k:
         up()
         goto(x1, y1)
         down()
         goto(x2, y2)
         goto(x3, y3)
         goto(x1, y1)
-        goto((x1 + x2) / 2, (y1 + y2) / 2)
-        goto((x2 + x3) / 2, (y2 + y3) / 2)
-        goto((x1 + x3) / 2, (y1 + y3) / 2)
-        goto((x1 + x2) / 2, (y1 + y2) / 2)
-        triangle((x1 + (x1 + x2) / 2) / 2, (y1 +(y1 + y2) / 2) / 2, (x1 + (x1 + x3) / 2) / 2, (y1 + (y1 + y3) / 2) / 2,
-                 ((x1 + x2) / 2 + (x1 + x3) / 2) / 2, ((y1 + y2) / 2 + (y1 + y3) / 2) / 2)
-        triangle(((x1 + x2) / 2 + x2) / 2, (y2 + (y1 + y2) / 2) / 2, (x2 + (x2 + x3) / 2) / 2,
-                 (y2 + (y2 + y3) / 2) / 2, ((x1 + x2) / 2 + (x2 + x3) / 2) / 2, ((y1 + y2) / 2 + (y2 + y3) / 2) / 2)
-        triangle((x3 + (x1 + x3) / 2) / 2, (y3 + (y1 + y3) / 2) / 2, (x3 + (x2 + x3) / 2) / 2, (y3 + (y2 + y3) / 2) / 2,
-                 ((x3 + x2) / 2 + (x1 + x3) / 2) / 2, ((y3 + y2) / 2 + (y1 + y3) / 2) / 2)
-        triangle(((x3 + x2) / 2 + (x1 + x3) / 2) / 2, ((y3 + y2) / 2 + (y1 + y3) / 2) / 2,
-                ((x1 + x2) / 2 + (x2 + x3) / 2) / 2, ((y1 + y2) / 2 + (y2 + y3) / 2) / 2,
-                ((x1 + x2) / 2 + (x1 + x3) / 2) / 2, ((y1 + y2) / 2 + (y1 + y3) / 2) / 2)
+        triangle(x1, y1, (x1 + x2) / 2, (y1 + y2) / 2, (x1 + x3) / 2, (y1 + y3) / 2, k)
+        triangle(x2, y2, (x1 + x2) / 2, (y1 + y2) / 2, (x2 + x3) / 2, (y2 + y3) / 2, k)
+        triangle(x3, y3, (x3 + x2) / 2, (y3 + y2) / 2, (x1 + x3) / 2, (y1 + y3) / 2, k)
 
 
-
-
-
-reset
+reset()
 speed(0)
 hideturtle()
-answer = numinput('Что вы хотите нарисовать?', '1)Концентрические окружности\n2)Стрекоза\n3)\'Пазл\'\n4)Треугольники',
-                  0, minval=1, maxval=4)
+answer = numinput(local.choose1, local.choose2, 0, minval=1, maxval=4)
 if answer == 1:
-    rounds(numinput('Координаты центра окружности', 'Введите xc', 0, minval=-300, maxval=300), numinput
-    ('Координаты центра окружности', 'Введите yc', 0, minval=-300, maxval=300), numinput('Окружность',
-    'Введите радиус r ', 0, minval=0, maxval=300),numinput('Расстояние между дугами окружностей',
-    'Введите расстояние между дугами окружностей', 0, minval=1, maxval=300))
-
+    title(local.rounds0)
+    rounds(numinput(local.rounds11, local.rounds12, 0, minval=-500, maxval=500),
+           numinput(local.rounds11, local.rounds22, 0, minval=-500, maxval=500),
+           numinput(local.rounds31, local.rounds32, 0, minval=0, maxval=500),
+           numinput(local.rounds41, local.rounds42, 0, minval=1, maxval=500))
 elif answer == 2:
-    strecoza(numinput('Центр стрекозы x', 'Введите x', 0, minval=-500, maxval=500), numinput
-    ('Центр стрекозы y', 'Введите y', 0, minval=-500, maxval=500), numinput('Радиус', 'Введите радиус', 0,
-    minval=-500, maxval=500), numinput('Ограничение по размеру', 'Введите ограничение по размеру глаз', 0, minval=1,
-    maxval=500))
-
+    title(local.strecoza0)
+    strecoza(numinput(local.strecoza11, local.strecoza12, 0, minval=-500, maxval=500),
+             numinput(local.strecoza11, local.strecoza22, 0, minval=-500, maxval=500),
+             numinput(local.strecoza31, local.strecoza32, 0, minval=-500, maxval=500),
+             numinput(local.strecoza41, local.strecoza42, 0, minval=1, maxval=500))
 elif answer == 3:
-    puzzle(numinput('Координаты центра квадрата', 'Введите x', 0, minval=-500, maxval=500), numinput
-    ('Координаты центра квадрата', 'Введите y', 0, minval=-500, maxval=500), numinput('Ребро квадрата', 'Введите a', 0,
-    minval=1, maxval=700), numinput('Минимальное ребро квадрата', 'Введите k', 0, minval=1, maxval=700))
-
+    title(local.puzzle0)
+    puzzle(numinput(local.puzzle11, local.puzzle12, 0, minval=-500, maxval=500),
+           numinput(local.puzzle11, local.puzzle22, 0, minval=-500, maxval=500),
+           numinput(local.puzzle31, local.puzzle32, 0, minval=1, maxval=500),
+           numinput(local.puzzle41, local.puzzle42, 0, minval=1, maxval=500))
 elif answer == 4:
-    triangle(numinput('Координаты 1 точки', 'Введите x1', 0, minval=-500, maxval=500), numinput('Координаты 1 точки',
-            'Введите y1', 0, minval=-500, maxval=500), numinput('Координаты 2 точки', 'Введите x2', 0, minval=-500, maxval=500),
-            numinput('Координаты 2 точки', 'Введите y2', 0, minval=-500, maxval=500), numinput('Координаты 3 точки',
-            'Введите x3', 0, minval=-500, maxval=500), numinput('Координаты 3 точки', 'Введите y3', 0, minval=-500, maxval=500))
-
+    title(local.triangle0)
+    triangle(numinput(local.triangle11, local.triangle12, 0, minval=-500, maxval=500),
+             numinput(local.triangle11, local.triangle22, 0, minval=-500, maxval=500),
+             numinput(local.triangle31, local.triangle32, 0, minval=-500, maxval=500),
+             numinput(local.triangle31, local.triangle42, 0, minval=-500, maxval=500),
+             numinput(local.triangle51, local.triangle52, 0, minval=-500, maxval=500),
+             numinput(local.triangle51, local.triangle62, 0, minval=-500, maxval=500),
+             numinput(local.triangle71, local.triangle72, 0, minval=1, maxval=500))
 mainloop()
