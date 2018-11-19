@@ -10,6 +10,8 @@ def rounds(x, y, r, n):
         circle(r)
         up()
         rounds(x, y, r - n, n)
+    else:
+        pass
 
 
 def rectangle(x1, y1, x2, y2):
@@ -29,6 +31,8 @@ def puzzle(x, y, a, k):
         puzzle(x - a / 2, y + a / 2, a / 2, k)
         puzzle(x + a / 2, y + a / 2, a / 2, k)
         puzzle(x + a / 2, y - a / 2, a / 2, k)
+    else:
+        pass
 
 
 def strecoza(x, y, r, k):
@@ -39,6 +43,8 @@ def strecoza(x, y, r, k):
         circle(r)
         strecoza(x - r / 2, y, r / 2, k)
         strecoza(x + r / 2, y, r / 2, k)
+    else:
+        pass
 
 
 def triangle(x1, y1, x2, y2, x3, y3, k):
@@ -53,6 +59,8 @@ def triangle(x1, y1, x2, y2, x3, y3, k):
         triangle(x1, y1, (x1 + x2) / 2, (y1 + y2) / 2, (x1 + x3) / 2, (y1 + y3) / 2, k)
         triangle(x2, y2, (x1 + x2) / 2, (y1 + y2) / 2, (x2 + x3) / 2, (y2 + y3) / 2, k)
         triangle(x3, y3, (x3 + x2) / 2, (y3 + y2) / 2, (x1 + x3) / 2, (y1 + y3) / 2, k)
+    else:
+        pass
 
 
 reset()
